@@ -35,15 +35,23 @@
                     <li><a href="<?php echo site_url('dashboard2') ?>"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-th"></i> <span>Gudang</span>
+                    <i class="fa fa-dashboard"></i> <span>Penyimpanan</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="<?php echo base_url('gudang') ?>"><i class="fa fa-circle-o"></i> Tambah gudang</a></li>
+                    <li><a href="<?php echo base_url('gudang/gudang_list') ?>"><i class="fa fa-circle-o"></i> List gudang</a></li>
+                </ul>
             </li>
-            <li>
+            <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-th"></i> <span>Furniture</span>
+                    <i class="fa fa-dashboard"></i> <span>Furniture</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                  <li><a href="<?php echo base_url('furniture/add_furniture') ?>"><i class="fa fa-circle-o"></i>Add Furniture</a></li>
+                    <li><a href="<?php echo base_url('furniture') ?>"><i class="fa fa-circle-o"></i> Stok Furniture</a></li>
+                </ul>
             </li>
             <li>
                 <a href="#">
@@ -56,8 +64,9 @@
                     <i class="fa fa-dashboard"></i> <span>Manage Users</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo site_url('user') ?>"><i class="fa fa-circle-o"></i> Add user</a></li>
-                    <li><a href="<?php echo site_url('user/users_list') ?>"><i class="fa fa-circle-o"></i> View users</a></li>
+                    <li><a href="<?php echo base_url('user') ?>"><i class="fa fa-circle-o"></i> Add user</a></li>
+                    <li><a href="<?php echo base_url('user/users_list') ?>"><i class="fa fa-circle-o"></i> View users perusahaan</a></li>
+                    <li><a href="<?php echo base_url('user/users_list_toko') ?>"><i class="fa fa-circle-o"></i> View users toko</a></li>
                 </ul>
             </li>
         </ul>

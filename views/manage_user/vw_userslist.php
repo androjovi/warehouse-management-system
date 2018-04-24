@@ -48,13 +48,13 @@ $this->load->view('template/sidebar');
             </tr>
             </thead>
             <tbody>
-              <?php foreach($query as $k): ?>
+              <?php foreach ($query as $k): ?>
               <tr>
                 <td><?php echo $k->id_perusahaan; ?></td>
                 <td><?php echo $k->nama; ?></td>
                 <td><?php echo $k->username; ?></td>
                 <td><?php echo $k->status; ?></td>
-                <td style="text-align: center;"><a href="<?php echo site_url('user/del_users/'.$k->id_perusahaan); ?>" onclick="return confirm_hapus()" class="btn btn-danger btn-sm">Hapus</a>&nbsp;<a href="" class="btn btn-success btn-sm">Update</a>&nbsp;<a href="" class="btn btn-warning btn-sm">Lihat</a></td>
+                <td style="text-align: center;"><a href="<?php echo site_url('user/del_users/'.$k->id_perusahaan); ?>" onclick="return confirm_hapus()" class="btn btn-danger btn-sm">Hapus</a>&nbsp;<a href="<?php echo site_url('user/edit/'. $k->id_perusahaan); ?>" class="btn btn-success btn-sm">Update</a>&nbsp;<a href="javascript:void(0)" data-user="<?php echo $k->id_perusahaan; ?>" class="btn btn-warning btn-sm details_user">Lihat</a></td>
               </tr>
             <?php endforeach; ?>
             </tbody>
@@ -65,7 +65,23 @@ $this->load->view('template/sidebar');
         <!-- /.box -->
 
 </section><!-- /.content -->
-
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Details user</h4>
+      </div>
+      <div class="modal-body">
+<pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <?php
 $this->load->view('template/js');
@@ -75,7 +91,28 @@ $this->load->view('template/js');
 <script>
 $(document).ready(function(){
   $("#table").dataTable()
+  $(".details_user").click(function(){
+    t = $(this).attr('data-user')
+$.ajax({
+  type: "get",
+  url : "<?php echo base_url() ?>user/show/"+t,
+  dataType: "json",
+  success: function(data){
+    //$.each(data, function(n, j){
+            $(".modal-body").html('<pre>'+data.username+'</pre>')
+    //})
+      $("#myModal").modal('show');
+  }
 })
+/*$.get("<?php echo base_url() ?>user/show/"+t, function(data){
+  $.each(JSON.parse(data), function(n, j){
+      $(".modal-body").html('<pre>'+j.username+'</pre>')
+  })
+  */
+})
+})
+
+
 </script>
 <!-- jQuery UI 1.11.2 -->
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>

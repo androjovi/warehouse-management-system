@@ -25,3 +25,8 @@ function amankan($input){
   $get_input = $CI->input->post($input);
   return htmlspecialchars(strip_tags( $get_input ));
 }
+function get_induk($data, $table){
+  $CI = &get_instance();
+  $CI->db->select($data);
+  return $CI->db->get($table)->result();
+}

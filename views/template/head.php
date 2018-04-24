@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>AdminLTE 2 | Dashboard</title>
+        <title>Warehouse Managament System</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.2 -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
@@ -15,7 +15,34 @@
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/skins/_all-skins.min.css') ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/bootstrap-select/bootstrap-select.min.css') ?>" rel="stylesheet" type="text/css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+<?php if ($this->session->flashdata('success')): ?>
+$.notify({
+	// options
+	message: '<?php echo $this->session->flashdata('success'); ?>'
+},{
+	// settings
+	type: 'success'
+});
+<?php elseif ($this->session->flashdata('error')): ?>
+$.notify({
+	// options
+	message: '<?php echo $this->session->flashdata('error'); ?>'
+},{
+	// settings
+	type: 'danger'
+});
+<?php endif; ?>
+})
+</script>
+<style>
+  .ll{
+    text-align: left;
+  }
+</style>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>

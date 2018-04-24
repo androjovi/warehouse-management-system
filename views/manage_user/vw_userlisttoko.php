@@ -15,91 +15,105 @@ $this->load->view('template/head');
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/daterangepicker/daterangepicker-bs3.css') ?>" rel="stylesheet" type="text/css" />
 <!-- bootstrap wysihtml5 - text editor -->
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') ?>" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-3.2.1/dt-1.10.16/r-2.2.1/datatables.min.css"/>
 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.2.1/dt-1.10.16/r-2.2.1/datatables.min.js"></script>
 <?php
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
 ?>
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
+<?php breadcrumb() ?>
+
 
 <!-- Main content -->
 <section class="content">
   <div class="row">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah Gudang</span>
-            <span class="info-box-number">90<small>%</small></span>
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Users list</h3>
           </div>
-          <!-- /.info-box-content -->
+          <table class="table table-bordered" id="table">
+            <thead>
+              <tr>
+              <th>Id Toko</th>
+              <th>Nama toko</th>
+              <th>User toko</th>
+              <th>Telepon</th>
+              <th>AKSI</th>
+            </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($query as $k): ?>
+              <tr>
+                <td><?php echo $k->id_toko; ?></td>
+                <td><?php echo $k->nama_toko; ?></td>
+                <td><?php echo $k->user_toko; ?></td>
+                <td><?php echo $k->telepon_toko; ?></td>
+                <td style="text-align: center;"><a href="<?php echo site_url('user/del_user_toko/'.$k->id_toko); ?>" onclick="return confirm_hapus()" class="btn btn-danger btn-sm">Hapus</a>&nbsp;<a href="<?php echo site_url('user/edit_toko/'. $k->id_toko); ?>" class="btn btn-success btn-sm">Update</a>&nbsp;<a href="javascript:void(0)" data-user="<?php echo $k->id_toko; ?>" class="btn btn-warning btn-sm details_user">Lihat</a></td>
+              </tr>
+            <?php endforeach; ?>
+            </tbody>
+          </table>
         </div>
-        <!-- /.info-box -->
       </div>
-      <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah Furniture</span>
-            <span class="info-box-number">41,410</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-
-      <!-- fix for small devices only -->
-      <div class="clearfix visible-sm-block"></div>
-
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah perusahaan</span>
-            <span class="info-box-number">760</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah toko</span>
-            <span class="info-box-number">2,000</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
     </div>
+        <!-- /.box -->
 
+</section><!-- /.content -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Details user</h4>
+      </div>
+      <div class="modal-body">
+<pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <?php
 $this->load->view('template/js');
 ?>
 
 <!--tambahkan custom js disini-->
+<script>
+$(document).ready(function(){
+  $("#table").dataTable()
+  $(".details_user").click(function(){
+    t = $(this).attr('data-user')
+$.ajax({
+  type: "get",
+  url : "<?php echo base_url() ?>user/show/"+t,
+  dataType: "json",
+  success: function(data){
+    //$.each(data, function(n, j){
+            $(".modal-body").html('<pre>'+data.username+'</pre>')
+    //})
+      $("#myModal").modal('show');
+  }
+})
+/*$.get("<?php echo base_url() ?>user/show/"+t, function(data){
+  $.each(JSON.parse(data), function(n, j){
+      $(".modal-body").html('<pre>'+j.username+'</pre>')
+  })
+  */
+})
+})
+
+
+</script>
 <!-- jQuery UI 1.11.2 -->
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

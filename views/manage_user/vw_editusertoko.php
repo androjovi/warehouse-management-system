@@ -22,77 +22,88 @@ $this->load->view('template/sidebar');
 ?>
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
+<?php breadcrumb() ?>
+
 
 <!-- Main content -->
 <section class="content">
   <div class="row">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah Gudang</span>
-            <span class="info-box-number">90<small>%</small></span>
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Edit users </h3>
           </div>
-          <!-- /.info-box-content -->
+          <!-- /.box-header -->
+          <!-- form start -->
+          <?php foreach($query as $k): ?>
+            <form class="form-horizontal" method="post" action="<?php echo site_url('user/update_toko/'. $k->id_toko) ?>">
+                <div class="box-body">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">ID Toko</label>
+
+                    <div class="col-sm-10">
+                      <input type="number" readonly name="id_toko" class="form-control" placeholder="ID Toko" value="<?php echo $k->id_toko ?>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Nama toko</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" name="nama_toko" class="form-control" placeholder="Nama toko" value="<?php echo $k->nama_toko ?>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Username Toko</label>
+
+                    <div class="col-sm-4">
+                      <input type="text" name="username" class="form-control" placeholder="Username toko" value="<?php echo $k->user_toko ?>">
+                    </div>
+
+                    <label class="col-sm-2 col-md-pull-1 control-label">Password</label>
+
+                    <div class="col-sm-4 col-md-pull-1">
+                      <input type="password" name="password" class="form-control" placeholder="Password toko" value="<?php echo $k->password ?>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Alamat Toko</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" name="alamat_toko" class="form-control" placeholder="Alamat toko" value="<?php echo $k->alamat_toko ?>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Telepon Toko</label>
+
+                    <div class="col-sm-10">
+                      <input type="number" name="telepon_toko" class="form-control" placeholder="No telepon" value="<?php echo $k->telepon_toko ?>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Email Toko</label>
+
+                    <div class="col-sm-10">
+                      <input type="email" name="email_toko" class="form-control" placeholder="Email toko" value="<?php echo $k->email_toko ?>">
+                    </div>
+                  </div>
+                  <?php echo validation_errors(); ?>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                  <button type="reset" class="btn btn-danger">Hapus</button>
+                  <button type="submit" class="btn btn-info pull-right">Sign in</button>
+                </div>
+                <!-- /.box-footer -->
+              </form>
+          <?php endforeach; ?>
         </div>
-        <!-- /.info-box -->
       </div>
-      <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah Furniture</span>
-            <span class="info-box-number">41,410</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-
-      <!-- fix for small devices only -->
-      <div class="clearfix visible-sm-block"></div>
-
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah perusahaan</span>
-            <span class="info-box-number">760</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah toko</span>
-            <span class="info-box-number">2,000</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
     </div>
+        <!-- /.box -->
+
+</section><!-- /.content -->
 
 
 <?php

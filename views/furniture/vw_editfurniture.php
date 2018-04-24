@@ -22,78 +22,88 @@ $this->load->view('template/sidebar');
 ?>
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
+<?php breadcrumb() ?>
+
 
 <!-- Main content -->
 <section class="content">
   <div class="row">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah Gudang</span>
-            <span class="info-box-number">90<small>%</small></span>
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Add Furniture</h3>
           </div>
-          <!-- /.info-box-content -->
+          <!-- /.box-header -->
+          <!-- form start -->
+          <?php foreach($query as $k): ?>
+          <form class="form-horizontal" method="post" action="<?php echo site_url('furniture/update/'. $k->id_furniture) ?>" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">ID Furniture</label>
+
+                  <div class="col-sm-10">
+                    <input type="number" name="id_furniture" readonly value="<?php echo $k->id_furniture ?>" class="form-control" placeholder="ID Furniture">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Nama Furniture</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" name="nama_furniture" value="<?php echo $k->nama_furniture ?>" class="form-control" placeholder="Nama furniture">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Deskripsi furniture</label>
+
+                  <div class="col-sm-10">
+                    <textarea name="deskripsi_furniture" style="resize:none;height:50%;" class="form-control" placeholder="Max 100 Characters"><?php echo $k->deskripsi; ?></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Nama gudang</label>
+
+                  <div class="col-sm-10">
+                    <input type="file" name="image_furniture" id="imgInp" class="form-control">
+                  </div>
+
+                </div>
+                <img id="blah" src="<?php echo base_url('upload_/'.$k->image) ?>" width="150" height="150" alt="preview Image furniture">
+                <?php echo validation_errors(); ?>
+                <?php if (isset($error)){echo $error;} ?>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="reset" class="btn btn-danger">Hapus</button>
+                <button type="submit" class="btn btn-info pull-right">Sign in</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          <?php endforeach; ?>
         </div>
-        <!-- /.info-box -->
       </div>
-      <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah Furniture</span>
-            <span class="info-box-number">41,410</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-
-      <!-- fix for small devices only -->
-      <div class="clearfix visible-sm-block"></div>
-
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah perusahaan</span>
-            <span class="info-box-number">760</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Jumlah toko</span>
-            <span class="info-box-number">2,000</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
     </div>
+        <!-- /.box -->
+</section><!-- /.content -->
+<script>
+function readURL(input) {
 
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#blah').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$("#imgInp").change(function() {
+  readURL(this);
+});
+</script>
 
 <?php
 $this->load->view('template/js');
